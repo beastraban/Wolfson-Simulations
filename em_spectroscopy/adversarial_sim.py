@@ -257,7 +257,7 @@ for eps in eps_values:
         'delta_beta': delta_beta
     }
     print(f"    β_EB = {beta_eb:.5f} (δβ = {delta_beta:+.5f}, "
-          f"predicted ε/2 = {eps/2:+.5f})")
+          f"predicted ε(1-β²)/2 = {eps*(1-BETA_TRUE**2)/2:+.5f})")
     print(f"    T₀ mean = {T0_mean:.1f}, RMS spread = {T0_rms:.2f}%")
 
 # --- Test B: σ mismatch ---
@@ -330,7 +330,7 @@ ax = axes[0, 1]
 eps_arr = np.array(eps_values)
 delta_betas = np.array([aniso_results[e]['delta_beta'] for e in eps_values])
 ax.plot(eps_arr * 100, delta_betas, 'ko-', ms=6, lw=1.5, label='Measured $\\delta\\beta$')
-ax.plot(eps_arr * 100, eps_arr / 2.0, 'r--', lw=1.5, label='Predicted $\\varepsilon/2$')
+ax.plot(eps_arr * 100, eps_arr * (1 - BETA_TRUE**2) / 2.0, 'r--', lw=1.5, label='Predicted $\\varepsilon(1-\\beta^2)/2$')
 ax.set_xlabel(r'Rest-frame anisotropy $\varepsilon$ (%)')
 ax.set_ylabel(r'$\delta\beta = \beta_{\rm EB} - \beta_{\rm true}$')
 ax.set_title('(b) Velocity bias from anisotropy')
@@ -375,7 +375,7 @@ rows.append(f"  {'ε':>4s}  {'δβ meas':>8s}  {'δβ pred':>8s}  {'T₀ RMS':>7
 rows.append(f"  {'':->4s}  {'':->8s}  {'':->8s}  {'':->7s}")
 for eps in eps_values:
     r = aniso_results[eps]
-    rows.append(f"  {eps:4.0%}  {r['delta_beta']:+8.4f}  {eps/2:+8.4f}  "
+    rows.append(f"  {eps:4.0%}  {r['delta_beta']:+8.4f}  {eps*(1-BETA_TRUE**2)/2:+8.4f}  "
                 f"{r['T0_rms']:6.2f}%")
 
 rows.append(f"\nσ(ω) mismatch:")
